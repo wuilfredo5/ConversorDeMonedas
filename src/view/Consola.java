@@ -71,28 +71,34 @@ public class Consola {
     }
 
     private String leerMonedaManual(String tipo) {
-        System.out.println("Ingresa el código de 3 letras para la moneda " + tipo + " (ej: USD, EUR):");
-        String codigo = scanner.nextLine().trim().toUpperCase();
+        while (true) {
+            System.out.println("Ingresa el código de 3 letras para la moneda " + tipo + " (ej: USD, EUR):");
+            String codigo = scanner.nextLine().trim().toUpperCase();
 
-        // Validación básica
-        if (codigo.length() == 3 && codigo.matches("[A-Z]{3}")) {
-            return codigo;
-        } else {
-            System.out.println("❌ Código inválido. Usando USD por defecto.");
-            return "USD";
+            if (codigo.length() == 3 && codigo.matches("[A-Z]{3}")) {
+                return codigo;
+            } else {
+                System.out.println("❌ Código inválido. Debe ser exactamente 3 letras (ej: USD, EUR). Intenta nuevamente.");
+            }
         }
     }
 
     public double leerCantidad() {
-        System.out.println("Escribe la cantidad a convertir:");
-        try {
-            double cantidad = scanner.nextDouble();
-            scanner.nextLine(); // Limpiar buffer
-            return cantidad;
-        } catch (Exception e) {
-            scanner.nextLine(); // Limpiar buffer en caso de error
-            System.out.println("❌ Cantidad inválida. Usando 1.0 por defecto.");
-            return 1.0;
+        while (true) {
+            try {
+                System.out.println("Escribe la cantidad a convertir:");
+                double cantidad = scanner.nextDouble();
+                scanner.nextLine(); // Limpiar buffer
+
+                if (cantidad > 0) {
+                    return cantidad;
+                } else {
+                    System.out.println("❌ La cantidad debe ser mayor a 0. Intenta nuevamente.");
+                }
+            } catch (Exception e) {
+                System.out.println("❌ Entrada inválida. Debe ser un número (ej: 100, 50.25). Intenta nuevamente.");
+                scanner.nextLine(); // Limpiar buffer en caso de error
+            }
         }
     }
 
