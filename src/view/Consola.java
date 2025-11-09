@@ -11,12 +11,13 @@ public class Consola {
 
     public void mostrarBienvenida() {
         String bienvenida = """
-                ************ BIENVENIDO AL CONVERSOR DE MONEDAS ************
-                ************ Admitimos 161 monedas de circulación mundial ************
-                """;
+            ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+            🎯          BIENVENIDO AL CONVERSOR DE MONEDAS PLUS          🎯
+            💰          161 monedas disponibles - Conversión instantánea 💰
+            ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+            """;
         System.out.println(bienvenida);
     }
-
     public int mostrarMenuPrincipal() {
         String menu = """
             \n=== MENÚ PRINCIPAL ===
@@ -104,10 +105,10 @@ public class Consola {
     }
 
     public void mostrarResultado(String resultado) {
-        System.out.println("\n" + "=".repeat(60));
-        System.out.println("💱 RESULTADO DE LA CONVERSIÓN:");
+        System.out.println("\n" + "⭐".repeat(60));
+        System.out.println("💱 CONVERSIÓN EXITOSA!");
         System.out.println("➡️  " + resultado);
-        System.out.println("=".repeat(60) + "\n");
+        System.out.println("⭐".repeat(60) + "\n");
     }
 
     public void mostrarError(String mensaje) {
