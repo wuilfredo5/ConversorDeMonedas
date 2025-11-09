@@ -19,24 +19,25 @@ public class Consola {
 
     public int mostrarMenuPrincipal() {
         String menu = """
-                \n=== MENÚ PRINCIPAL - SELECCIONA UNA MONEDA ===
-                1.  USD → Dólar Estadounidense (Estados Unidos)
-                2.  EUR → Euro (Unión Europea)
-                3.  GBP → Libra Esterlina (Reino Unido)
-                4.  JPY → Yen Japonés (Japón)
-                5.  ARS → Peso Argentino (Argentina)
-                6.  VES → Bolívar Soberano (Venezuela)
-                7.  COP → Peso Colombiano (Colombia)
-                8.  BRL → Real Brasileño (Brasil)
-                9.  MXN → Peso Mexicano (México)
-                10. CLP → Peso Chileno (Chile)
-                11. PEN → Sol Peruano (Perú)
-                12. CNY → Yuan Chino (China)
-                13. KRW → Won Surcoreano (Corea del Sur)
-                14. Otra moneda (ingresar manualmente)
-                0.  Salir
-                
-                Elige una opción (0-14):""";
+            \n=== MENÚ PRINCIPAL ===
+            1.  USD → Dólar Estadounidense (Estados Unidos)
+            2.  EUR → Euro (Unión Europea)
+            3.  GBP → Libra Esterlina (Reino Unido)
+            4.  JPY → Yen Japonés (Japón)
+            5.  ARS → Peso Argentino (Argentina)
+            6.  VES → Bolívar Soberano (Venezuela)
+            7.  COP → Peso Colombiano (Colombia)
+            8.  BRL → Real Brasileño (Brasil)
+            9.  MXN → Peso Mexicano (México)
+            10. CLP → Peso Chileno (Chile)
+            11. PEN → Sol Peruano (Perú)
+            12. CNY → Yuan Chino (China)
+            13. KRW → Won Surcoreano (Corea del Sur)
+            14. Otra moneda (ingresar manualmente)
+            15. 📊 Ver historial de conversiones
+            0.  Salir
+            
+            Elige una opción (0-15):""";
 
         System.out.println(menu);
 

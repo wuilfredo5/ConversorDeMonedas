@@ -2,6 +2,7 @@ package controller;
 
 import models.Conversion;
 import models.DatosApi;
+import models.Historial;
 import service.ApiService;
 import view.Consola;
 
@@ -9,10 +10,12 @@ public class ConversorController {
 
     private Consola consola;
     private ApiService apiService;
+    private Historial historial;
 
     public ConversorController() {
         this.consola = new Consola();
         this.apiService = new ApiService();
+        this.historial = new Historial();
     }
 
     public void iniciar() {
@@ -37,8 +40,15 @@ public class ConversorController {
                 break;
             }
 
+            if (opcion == 15) {
+                // Mostrar historial
+                historial.mostrarHistorial();
+                continuar = consola.preguntarContinuar();
+                continue;
+            }
+
             if (opcion < 0 || opcion > 14) {
-                consola.mostrarError("Opción no válida. Por favor, elige entre 0 y 14.");
+                consola.mostrarError("Opción no válida. Por favor, elige entre 0 y 15.");
                 continue;
             }
 
@@ -83,6 +93,9 @@ public class ConversorController {
             DatosApi datosApi = apiService.realizarConversion(monedaOrigen, monedaDestino, cantidad);
             Conversion resultado = new Conversion(datosApi, cantidad);
             consola.mostrarResultado(resultado.toString());
+
+            // Agregar al historial
+            historial.agregarConversion(resultado);
 
         } catch (ApiService.ApiException e) {
             consola.mostrarError("Error en la conversión: " + e.getMessage());
