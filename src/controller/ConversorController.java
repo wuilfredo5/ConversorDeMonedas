@@ -22,26 +22,69 @@ public class ConversorController {
 
     public void iniciar() {
         try {
-            ejecutarConversor();
-        } catch (IOException | InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
+            ejecutarAplicacion();
+        } catch (Exception e) {
+            consola.mostrarError("Error inesperado: " + e.getMessage());
         } finally {
             consola.cerrar();
         }
     }
 
-    private void ejecutarConversor() throws IOException, InterruptedException {
+    private void ejecutarAplicacion() throws IOException, InterruptedException {
         consola.mostrarBienvenida();
 
-        // Obtener datos del usuario
-        String monedaOrigen = consola.leerMonedaOrigen();
-        String monedaDestino = consola.leerMonedaDestino();
+        boolean continuar = true;
+        while (continuar) {
+            int opcion = consola.mostrarMenuPrincipal();
+
+            if (opcion == 0) {
+                consola.mostrarMensaje("¡Gracias por usar el conversor! 👋");
+                break;
+            }
+
+            if (opcion < 0 || opcion > 14) {
+                consola.mostrarError("Opción no válida. Por favor, elige entre 0 y 14.");
+                continue;
+            }
+
+            procesarConversion(opcion);
+            continuar = consola.preguntarContinuar();
+        }
+    }
+
+    private void procesarConversion(int opcionMonedaOrigen) throws IOException, InterruptedException {
+        // Seleccionar moneda origen
+        String monedaOrigen = consola.obtenerMonedaPorOpcion(opcionMonedaOrigen, "origen");
+        if (monedaOrigen == null) {
+            consola.mostrarError("Opción de moneda origen no válida");
+            return;
+        }
+
+        // Mostrar menú para moneda destino
+        consola.mostrarMensaje("\n=== SELECCIONA MONEDA DESTINO ===");
+        int opcionMonedaDestino = consola.mostrarMenuPrincipal();
+
+        if (opcionMonedaDestino == 0) {
+            return;
+        }
+
+        String monedaDestino = consola.obtenerMonedaPorOpcion(opcionMonedaDestino, "destino");
+        if (monedaDestino == null) {
+            consola.mostrarError("Opción de moneda destino no válida");
+            return;
+        }
+
+        // Verificar que no sean la misma moneda
+        if (monedaOrigen.equals(monedaDestino)) {
+            consola.mostrarError("Las monedas de origen y destino no pueden ser iguales");
+            return;
+        }
+
+        // Obtener cantidad
         double cantidad = consola.leerCantidad();
 
-        // Realizar la conversión
+        // Realizar conversión
         Conversion resultado = convertirMoneda(monedaOrigen, monedaDestino, cantidad);
-
-        // Mostrar resultado
         consola.mostrarResultado(resultado.toString());
     }
 

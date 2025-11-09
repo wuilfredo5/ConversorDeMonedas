@@ -11,37 +11,114 @@ public class Consola {
 
     public void mostrarBienvenida() {
         String bienvenida = """
-                ************ Bienvenido al sistema de gestión de conversion de monedas ************
-                ************ Admitimos 161 monedas de circulacion mundial **************
-                
-                Debe ingresar la moneda de origen y la moneda destino 
-                Principales monedas soportadas: USD (eeuu), EUR(europa), GBP(reino unido), JPY(japon), ARS(argentina), VES(venezuela), COP(colombia)
+                ************ BIENVENIDO AL CONVERSOR DE MONEDAS ************
+                ************ Admitimos 161 monedas de circulación mundial ************
                 """;
         System.out.println(bienvenida);
     }
 
-    public String leerMonedaOrigen() {
-        System.out.println("Escribe la moneda de origen:");
-        return scanner.nextLine().toUpperCase();
+    public int mostrarMenuPrincipal() {
+        String menu = """
+                \n=== MENÚ PRINCIPAL - SELECCIONA UNA MONEDA ===
+                1.  USD → Dólar Estadounidense (Estados Unidos)
+                2.  EUR → Euro (Unión Europea)
+                3.  GBP → Libra Esterlina (Reino Unido)
+                4.  JPY → Yen Japonés (Japón)
+                5.  ARS → Peso Argentino (Argentina)
+                6.  VES → Bolívar Soberano (Venezuela)
+                7.  COP → Peso Colombiano (Colombia)
+                8.  BRL → Real Brasileño (Brasil)
+                9.  MXN → Peso Mexicano (México)
+                10. CLP → Peso Chileno (Chile)
+                11. PEN → Sol Peruano (Perú)
+                12. CNY → Yuan Chino (China)
+                13. KRW → Won Surcoreano (Corea del Sur)
+                14. Otra moneda (ingresar manualmente)
+                0.  Salir
+                
+                Elige una opción (0-14):""";
+
+        System.out.println(menu);
+
+        try {
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
+            return opcion;
+        } catch (Exception e) {
+            scanner.nextLine(); // Limpiar buffer en caso de error
+            return -1; // Indicar opción inválida
+        }
     }
 
-    public String leerMonedaDestino() {
-        System.out.println("Escribe la moneda destino:");
-        return scanner.nextLine().toUpperCase();
+    public String obtenerMonedaPorOpcion(int opcion, String tipo) {
+        return switch (opcion) {
+            case 1 -> "USD";
+            case 2 -> "EUR";
+            case 3 -> "GBP";
+            case 4 -> "JPY";
+            case 5 -> "ARS";
+            case 6 -> "VES";
+            case 7 -> "COP";
+            case 8 -> "BRL";
+            case 9 -> "MXN";
+            case 10 -> "CLP";
+            case 11 -> "PEN";
+            case 12 -> "CNY";
+            case 13 -> "KRW";
+            case 14 -> leerMonedaManual(tipo);
+            default -> null;
+        };
+    }
+
+    private String leerMonedaManual(String tipo) {
+        System.out.println("Ingresa el código de 3 letras para la moneda " + tipo + " (ej: USD, EUR):");
+        String codigo = scanner.nextLine().trim().toUpperCase();
+
+        // Validación básica
+        if (codigo.length() == 3 && codigo.matches("[A-Z]{3}")) {
+            return codigo;
+        } else {
+            System.out.println("❌ Código inválido. Usando USD por defecto.");
+            return "USD";
+        }
     }
 
     public double leerCantidad() {
         System.out.println("Escribe la cantidad a convertir:");
-        double cantidad = scanner.nextDouble();
-        scanner.nextLine(); // Limpiar buffer
-        return cantidad;
+        try {
+            double cantidad = scanner.nextDouble();
+            scanner.nextLine(); // Limpiar buffer
+            return cantidad;
+        } catch (Exception e) {
+            scanner.nextLine(); // Limpiar buffer en caso de error
+            System.out.println("❌ Cantidad inválida. Usando 1.0 por defecto.");
+            return 1.0;
+        }
     }
 
     public void mostrarResultado(String resultado) {
-        System.out.println(resultado);
+        System.out.println("\n" + "=".repeat(60));
+        System.out.println("💱 RESULTADO DE LA CONVERSIÓN:");
+        System.out.println("➡️  " + resultado);
+        System.out.println("=".repeat(60) + "\n");
+    }
+
+    public void mostrarError(String mensaje) {
+        System.out.println("❌ ERROR: " + mensaje);
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        System.out.println(mensaje);
+    }
+
+    public boolean preguntarContinuar() {
+        System.out.println("¿Deseas hacer otra conversión? (s/n):");
+        String respuesta = scanner.nextLine().toLowerCase();
+        return respuesta.equals("s") || respuesta.equals("si");
     }
 
     public void cerrar() {
         scanner.close();
+        System.out.println("¡Hasta pronto! 👋");
     }
 }
